@@ -2,6 +2,9 @@ FILTER="appdynamics\|app-dynamics"
 
 if [ `echo $VCAP_SERVICES | grep -c $FILTER ` -gt 0 ];
 then
+  mkdir /tmp/appdynamics-logs
+  chmod -R 777 /tmp/appdynamics-logs
+  chmod -R 755 /home/vcap
   key="appdynamics"
   APPDYNAMICS_CONTROLLER_HOST_NAME=$(echo "${VCAP_SERVICES-}" | jq -r '.['\""$key"\"'][0] | .credentials | .["host-name"] ')
   APPDYNAMICS_CONTROLLER_PORT=$(echo "${VCAP_SERVICES-}" | jq -r '.['\""$key"\"'][0] | .credentials | .port ')
